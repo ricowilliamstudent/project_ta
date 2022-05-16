@@ -14,7 +14,7 @@ class LoginController extends Controller
 
         $data = $request->validate([
                 'username' => 'required',
-                'password' => 'required'
+                'password' => 'required',
         ]);
 
         if (Auth::attempt($data)){
