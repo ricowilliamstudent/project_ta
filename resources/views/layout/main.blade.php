@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="fontawesome-free-6.1.1-web/css/all.min.css">
     {{-- End Bootstrap Icon --}}
 
+    {{-- HighCharts --}}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    {{-- End HighCharts --}}
+
     {{-- CSS Sidebar --}}
     <link rel="stylesheet" href="css/styles.css">
     {{-- End CSS Sidebar--}}

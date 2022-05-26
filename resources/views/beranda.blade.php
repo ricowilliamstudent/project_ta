@@ -5,7 +5,7 @@
                 <hr>
 
                 {{-- Pembungkus Card --}}
-                <div class="row mt-3">
+                <div class="row mt-3" >
                     <div class="col">
                       <div class="card">
                         <div class="card-body">
@@ -32,8 +32,55 @@
                           </div>
                         </div>
                       </div>
-
                   </div>
                   {{-- End Pembungkus Card --}}
+
+
+                {{-- <div class="row mt 3">
+                    <div>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        const labels = [
+                          'Januari',
+                          'Februari',
+                          'Maret',
+                          'April',
+                          'Mei',
+                          'Juni',
+                          'Juli',
+                          'Agustus',
+                          'Septermber',
+                          'Oktober',
+                          'November',
+                          'Desember',
+                        ];
+
+                        const data = {
+                          labels: labels,
+                          datasets: [{
+                            label: 'SSH',
+                            backgroundColor: 'rgb(255,165,0)',
+                            borderColor: 'rgb(255,165,0)',
+                            data: [0, 10, 5, 2, 20, 30, 45],
+                          }]
+                        };
+
+                        const config = {
+                          type: 'line',
+                          data: data,
+                          options: {}
+                        };
+                         </script>
+
+                        <script>
+                            const myChart = new Chart(
+                            document.getElementById('myChart'),
+                            config
+                            );
+                        </script>
+                </div> --}}
+
             </div>
 @endsection

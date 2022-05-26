@@ -15,12 +15,12 @@
   </head>
 {{-- Form --}}
 <body>
+
       <div class="box">
         <div class="title-box">
-          <h3>Suricata Intrusion Prevention</h3>
-          <p></p>
+            <h3>Suricata Intrusion Prevention</h3>
+            <p></p>
         </div>
-
 
 
         <div class="form-box">
