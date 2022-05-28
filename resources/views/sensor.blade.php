@@ -14,15 +14,11 @@
             <figure class="highcharts-figure">
                 <div id="container-cpu" class="chart-container"></div>
                 <div id="container-memory" class="chart-container"></div>
-
-                <p class="highcharts-description">
-                    Chart Coba
-                </p>
+                <div id="container-disk" class="chart-container"></div>
             </figure>
 
-
             <script>
-                            var gaugeOptions = {
+                var gaugeOptions = {
                 chart: {
                     type: 'solidgauge'
                 },
@@ -81,13 +77,13 @@
                 }
             };
 
-            // The cpu gauge
+            // CPU
             var chartcpu = Highcharts.chart('container-cpu', Highcharts.merge(gaugeOptions, {
                 yAxis: {
                     min: 0,
-                    max: 200,
+                    max: 100,
                     title: {
-                        text: 'cpu'
+                        text: 'CPU'
                     }
                 },
 
@@ -97,83 +93,97 @@
 
                 series: [{
                     name: 'cpu',
-                    data: [80],
+                    data: [0],
                     dataLabels: {
                         format:
                             '<div style="text-align:center">' +
                             '<span style="font-size:25px">{y}</span><br/>' +
-                            '<span style="font-size:12px;opacity:0.4">km/h</span>' +
+                            '<span style="font-size:12px;opacity:0.4">%</span>' +
                             '</div>'
                     },
                     tooltip: {
-                        valueSuffix: ' km/h'
+                        valueSuffix: ' %'
                     }
                 }]
 
             }));
-
-            // The memory gauge
+            // End CPU
+            // MEMORY
             var chartmemory = Highcharts.chart('container-memory', Highcharts.merge(gaugeOptions, {
                 yAxis: {
                     min: 0,
-                    max: 5,
+                    max: 100,
                     title: {
-                        text: 'memory'
+                        text: 'MEMORY'
                     }
+                },
+
+                credits: {
+                    enabled: false
                 },
 
                 series: [{
                     name: 'memory',
-                    data: [1],
+                    data: [0],
                     dataLabels: {
                         format:
                             '<div style="text-align:center">' +
-                            '<span style="font-size:25px">{y:.1f}</span><br/>' +
-                            '<span style="font-size:12px;opacity:0.4">' +
-                            '* 1000 / min' +
-                            '</span>' +
+                            '<span style="font-size:25px">{y}</span><br/>' +
+                            '<span style="font-size:12px;opacity:0.4">%</span>' +
                             '</div>'
                     },
                     tooltip: {
-                        valueSuffix: ' revolutions/min'
+                        valueSuffix: ' %'
                     }
                 }]
 
             }));
-
-            // Bring life to the dials
-            setInterval(function () {
-                // cpu
-                var point,
-                    newVal,
-                    inc;
-
-                if (chartcpu) {
-                    point = chartcpu.series[0].points[0];
-                    inc = Math.round((Math.random() - 0.5) * 100);
-                    newVal = point.y + inc;
-
-                    if (newVal < 0 || newVal > 200) {
-                        newVal = point.y - inc;
+            // End Memory
+            // Disk
+            var chartdisk = Highcharts.chart('container-disk', Highcharts.merge(gaugeOptions, {
+                yAxis: {
+                    min: 0,
+                    max: 100,
+                    title: {
+                        text: 'DISK'
                     }
+                },
 
-                    point.update(newVal);
-                }
+                credits: {
+                    enabled: false
+                },
 
-                // memory
-                if (chartmemory) {
-                    point = chartmemory.series[0].points[0];
-                    inc = Math.random() - 0.5;
-                    newVal = point.y + inc;
-
-                    if (newVal < 0 || newVal > 5) {
-                        newVal = point.y - inc;
+                series: [{
+                    name: 'disk',
+                    data: [0],
+                    dataLabels: {
+                        format:
+                            '<div style="text-align:center">' +
+                            '<span style="font-size:25px">{y}</span><br/>' +
+                            '<span style="font-size:12px;opacity:0.4">%</span>' +
+                            '</div>'
+                    },
+                    tooltip: {
+                        valueSuffix: ' %'
                     }
+                }]
 
-                    point.update(newVal);
-                }
-            }, 2000);
-
+            }));
+            // End Disk
+            function getsensor (){
+                        $.ajax({
+                            url: "{{ route('getconserver') }}",
+                            type:'get',
+                            success: function(response){
+                                chartcpu.series[0].points[0].update(parseFloat(response[0]));
+                                chartmemory.series[0].points[0].update(parseFloat(response[1]));
+                                chartdisk.series[0].points[0].update(parseFloat(response[2]));
+                            }
+                        })
+                    }
+                    setInterval (function(){
+                       getsensor();
+                    }, 3000);
             </script>
 
         </div>

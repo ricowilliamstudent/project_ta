@@ -35,7 +35,7 @@ Route::get('/notifikasi', [App\Http\Controllers\HomeController::class, 'notifika
 Route::get('/sensor', [App\Http\Controllers\HomeController::class, 'sensor'])->name('sensor');
 Route::get('/ranges', [App\Http\Controllers\HomeController::class, 'ranges'])->name('ranges');
 
-Route::get('/api/status', [App\Http\Controllers\ApiController::class, 'getConServer']);
+Route::get('/api/status', [App\Http\Controllers\ApiController::class, 'getConServer'])->name('getconserver');
 
 });
 // End Middleware
