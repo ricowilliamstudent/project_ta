@@ -17,6 +17,33 @@
                 <div id="container-disk" class="chart-container"></div>
             </figure>
 
+            {{-- Tabel --}}
+
+            <table class="table table-bordered" border="1" width="600px">
+                <tr align="center">
+                    <th width="300"> INFO CPU </th>
+                    <th width="300"> INFO MEMORY </th>
+                    <th width="300"> INFO DISK </th>
+                </tr>
+                <tr align="left">
+                    <td>Processor :<span id="infocpu"></span></td>
+                    <td>Memory Tersedia :<span id="infomemory"></span> GB</td>
+                    <td>Disk Tersedia :<span id="infodisk"></span>GB</td>
+                </tr>
+                <tr align="left">
+                    <td>CPU Cores :<span id="jumlahcore"></span></td>
+                    <td>Memory Digunakan :<span id="memoryused"></span>GB</td>
+                    <td>Disk Digunakan :<span id="diskdused"></span>GB</td>
+                </tr>
+                <tr align="left">
+                    <td>Total Core : <span id="totalcore"></span></td>
+                    <td>Total Memory : <span id="totalmemory"></span>GB</td>
+                    <td>Total Disk :<span id="totaldisk"></span>GB</td>
+                </tr>
+
+            </table>
+
+            {{-- end tabel --}}
             <script>
                 var gaugeOptions = {
                 chart: {
@@ -170,14 +197,32 @@
 
             }));
             // End Disk
+
             function getsensor (){
                         $.ajax({
                             url: "{{ route('getconserver') }}",
                             type:'get',
                             success: function(response){
+                                console.log(response);
                                 chartcpu.series[0].points[0].update(parseFloat(response[0]));
                                 chartmemory.series[0].points[0].update(parseFloat(response[1]));
                                 chartdisk.series[0].points[0].update(parseFloat(response[2]));
+
+                                $("#infocpu").text(response[3]);
+                                $("#infomemory").text(response[4]);
+                                $("#infodisk").text(response[5]);
+
+                                $("#jumlahcore").text(response[6]);
+                                $("#memoryused").text(response[7]);
+                                $("#diskdused").text(response[8]);
+
+                                $("#totalcore").text(response[9]);
+                                $("#totalmemory").text(response[10]);
+                                $("#totaldisk").text(response[11]);
+
+                                $("#speedcpu").text(response[12]);
+
+
                             }
                         })
                     }
@@ -185,6 +230,7 @@
                        getsensor();
                     }, 3000);
             </script>
+
 
         </div>
     </div>
