@@ -62,5 +62,8 @@
         width: 300px;
         float: none;
         margin: 0 auto;
+        border-collapse: separate;
+        border-spacing: 50px;
+
     }
 }

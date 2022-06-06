@@ -2,6 +2,7 @@
 
 @section('container')
 
+
     <div class="sensor">
         <h1>Halaman Sensor</h1>
         <hr>
@@ -10,16 +11,21 @@
         <div class="mt-3">
 
             <link rel="stylesheet" href="css/sensor.css">
-
-            <figure class="highcharts-figure">
-                <div id="container-cpu" class="chart-container"></div>
-                <div id="container-memory" class="chart-container"></div>
-                <div id="container-disk" class="chart-container"></div>
-            </figure>
+            <div class="form-group highcharts-figure col-12">
+                <div class="col-md-4">
+                    <div id="container-cpu" class="chart-container"></div>
+                </div>
+                <div class="col-md-4">
+                    <div id="container-memory" class="chart-container"></div>
+                </div>
+                <div class="col-md-4">
+                    <div id="container-disk" class="chart-container"></div>
+                </div>
+            </div>
 
             {{-- Tabel --}}
 
-            <table class="table table-bordered" border="1" width="600px">
+            <table class="table table-bordered" width="600px">
                 <tr align="center">
                     <th width="300"> INFO CPU </th>
                     <th width="300"> INFO MEMORY </th>
