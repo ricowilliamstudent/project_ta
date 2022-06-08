@@ -24,13 +24,13 @@ class HomeController extends Controller
 
     public function log_serangan() {
         $title = "Log Serangan";
-
+        //Call Python File
         $command = escapeshellcmd(public_path().'/normalisasi.py');
         $output = explode(",",shell_exec($command));
 
         $log = json_decode(file_get_contents(public_path() . "/data.json"), true);
 
-        return view('log_serangan', compact('title', 'log'));
+        return view('log_serangan', compact('title','log'));
     }
 
     public function notifikasi() {

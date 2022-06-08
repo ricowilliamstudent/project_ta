@@ -228,7 +228,6 @@
 
                                 $("#speedcpu").text(response[12]);
 
-
                             }
                         })
                     }
