@@ -1,11 +1,15 @@
-@extends('layout.main')
+@extends('layout.template')
 
 @section('container')
-    <div class="card mt-4 ml-4 p-4 mb-4">
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 font-weight-bold text-gray-800"><i class="fa fa-bug" aria-hidden="true"></i> Halaman Log Serangan</h1>
+</div>
+<div class="card">
+    <div class="card-body">
         <div class="log_serangan">
-            <h1>Halaman Log Serangan</h1>
-            <hr>
-
+@php
+    $tipe = "";
+@endphp
             {{-- Content --}}
             <div class="mt-3">
                 <table id="myTable" class="table table-bordered">
@@ -19,14 +23,23 @@
                     <tbody style="text-align: center">
                         @foreach ($log as $key => $item)
                             <tr>
+                                @php
+                                    if(str_contains($item[1], 'ICMP')){
+                                        $tipe = "ICMP";
+                                    }else if(str_contains($item[1], 'TCP')){
+                                        $tipe = "TCP";
+                                    }else{
+                                        $tipe = "Tidak diketahui";
+                                    }
+                                @endphp
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item[2] }}</td>
                                 <td>{{ $item[0] }}</td>
                                 <td>{{ $item[1] }}</td>
                                 <td>
-                                    <button class="btn btn-success">Accept</button>
-                                    <button class="btn btn-warning">Reject</button>
-                                    <button class="btn btn-danger">Drop</button>
+                                    <a class="btn btn-success" href="/iptables/accept/{{str_replace(' ','',$item[2])}}/{{str_replace(' ','.',$item[0])}}/{{ $tipe }}">Accept</a>
+                                    <a class="btn btn-warning" href="/iptables/reject/{{str_replace(' ','',$item[2])}}/{{str_replace(' ','.',$item[0])}}/{{ $tipe }}">Reject</a>
+                                    <a class="btn btn-danger" href="/iptables/drop/{{str_replace(' ','',$item[2])}}/{{str_replace(' ','.',$item[0])}}/{{ $tipe }}">Drop</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -36,12 +49,15 @@
             </div>
             {{-- End Content --}}
         </div>
+    </div>
     @endsection
 
     @push('js')
         <script>
             $(document).ready(function() {
-                $('#myTable').DataTable();
+                $('#myTable').DataTable({
+                    order: [[2, 'desc']],
+                });
             });
         </script>
     @endpush

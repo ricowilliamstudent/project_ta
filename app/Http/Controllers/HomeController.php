@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Models\User;
+use App\Models\User;
+use App\Models\Iptables;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-
+use Carbon\Carbon;
 class HomeController extends Controller
 {
 
     public function index() {
         $title = "Beranda";
+
 
         return view('beranda', compact('title'));
     }
@@ -19,24 +21,30 @@ class HomeController extends Controller
     public function beranda() {
         $title = "Beranda";
 
-        return view('beranda', compact('title'));
+        $serangan = Iptables::all()-> count();
+        $ICMP = Iptables::where('tipe', 'ICMP')->get()->count();
+        $TCP = Iptables::where('tipe', 'TCP')->get()->count();
+
+        return view('beranda', compact('title', 'serangan', 'ICMP', 'TCP'));
     }
 
     public function log_serangan() {
         $title = "Log Serangan";
         //Call Python File
-        $command = escapeshellcmd(public_path().'/normalisasi.py');
+        $command = escapeshellcmd('python3 normalisasi.py');
         $output = explode(",",shell_exec($command));
-
+        // dd($output);
         $log = json_decode(file_get_contents(public_path() . "/data.json"), true);
-
+        $log = array_reverse($log);
         return view('log_serangan', compact('title','log'));
     }
 
-    public function notifikasi() {
-        $title = "Notifikasi";
+    public function iptables() {
+        $title = "iptables";
 
-        return view('notifikasi', compact('title'));
+        $iptables = iptables::latest() -> get();
+
+        return view('iptables', compact('title','iptables'));
     }
 
     public function sensor() {
@@ -56,4 +64,76 @@ class HomeController extends Controller
 
         return view('logout', compact('title'));
     }
+
+    public function accept($ip, $time, $tipe){
+        $time = str_replace('.',' ', $time);
+        $time = Carbon::parse($time);
+        $iptables = Iptables::where('sumberip', $ip)->where ('tipe', $tipe) -> first() ?? null;
+        if($iptables==null ){
+            $iptables = new Iptables();
+            $iptables -> sumberip = $ip;
+        }
+        $iptables -> waktu = $time;
+        $iptables -> status = "accept";
+        $iptables -> tipe = $tipe;
+        $iptables -> save();
+
+        $command = escapeshellcmd('python3 iptables.py '.$ip.' ACCEPT');
+        $output = explode(",",shell_exec($command));
+        $title = "iptables";
+
+        $iptables = iptables::latest() -> get();
+
+
+        return view('iptables', compact('title','iptables'));
+    }
+
+    public function reject($ip, $time, $tipe){
+        $time = str_replace('.',' ', $time);
+        $time = Carbon::parse($time);
+        $iptables = Iptables::where('sumberip', $ip)->where ('tipe', $tipe) -> first() ?? null;
+        if($iptables==null ){
+            $iptables = new Iptables();
+            $iptables -> sumberip = $ip;
+        }
+        $iptables -> waktu = $time;
+        $iptables -> status = "reject";
+        $iptables -> tipe = $tipe;
+        $iptables -> save();
+
+        $command = escapeshellcmd('python3 iptables.py '.$ip.' REJECT');
+        $output = explode(",",shell_exec($command));
+
+        $title = "iptables";
+
+        $iptables = iptables::latest() -> get();
+
+        return view('iptables', compact('title','iptables'));
+    }
+
+    public function drop($ip, $time, $tipe){
+        $time = str_replace('.',' ', $time);
+        $time = Carbon::parse($time);
+        $iptables = Iptables::where('sumberip', $ip)->where ('tipe', $tipe) -> first() ?? null;
+        if($iptables==null ){
+            $iptables = new Iptables();
+            $iptables -> sumberip = $ip;
+        }
+        $iptables -> waktu = $time;
+        $iptables -> status = "drop";
+        $iptables -> tipe = $tipe;
+        $iptables -> save();
+
+        $command = escapeshellcmd('python3 iptables.py '.$ip.' DROP');
+        $output = explode(",",shell_exec($command));
+
+        $title = "iptables";
+
+        $iptables = iptables::latest() -> get();
+
+        return view('iptables', compact('title','iptables'));
+    }
+
+
+
 }

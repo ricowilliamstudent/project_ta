@@ -8,7 +8,7 @@ class ApiController extends Controller
 {
     public function getConServer(){
 
-        $command = escapeshellcmd(public_path().'/sensor.py');
+        $command = escapeshellcmd("python3 sensor.py");
         $output = explode(",",shell_exec($command));
 
         return $output;

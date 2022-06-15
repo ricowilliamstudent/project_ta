@@ -1,4 +1,4 @@
-import os, platform, psutil, cpuinfo
+import os, psutil, cpuinfo, platform
 
 # Koneksi ke database
 import mysql.connector
@@ -6,9 +6,9 @@ from sqlalchemy import false, true
 
 mydb = mysql.connector.connect(
   host="localhost",
-  user="root",
-  password="",
-  database="website_ips"
+  user="user",
+  password="password",
+  database="websiteips"
 )
 
 mycursor = mydb.cursor()
@@ -23,7 +23,8 @@ mydb.commit()
 cpu = psutil.cpu_percent(1)
 memory = psutil.virtual_memory()[2]
 disk = psutil.disk_usage('/').percent
-brandcpu = cpuinfo.get_cpu_info()['brand_raw']
+
+brandcpu = platform.processor()
 
 memoryy = psutil.virtual_memory()
 memorytersedia = round(memoryy.available/1024.0/1024.0/1024.0,1)

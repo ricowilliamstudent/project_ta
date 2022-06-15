@@ -17,12 +17,14 @@ use App\Http\Controllers\LoginController;
 
 // login
 Route::get('/', function () {
-    return view('auth.login');
+     return view('auth.login');
+
 });
 
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
+// end login
 
 Route::post('/postlogin', [App\Http\Controllers\LoginController::class, 'postlogin'])->name('postlogin');
 Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
@@ -31,12 +33,15 @@ Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->
 Route::middleware(['auth'])->group(function () {
 Route::get('/beranda', [App\Http\Controllers\HomeController::class, 'beranda'])->name('beranda');
 Route::get('/log_serangan', [App\Http\Controllers\HomeController::class, 'log_serangan'])->name('log_serangan');
-Route::get('/notifikasi', [App\Http\Controllers\HomeController::class, 'notifikasi'])->name('notifikasi');
+Route::get('/iptables', [App\Http\Controllers\HomeController::class, 'iptables'])->name('iptables');
 Route::get('/sensor', [App\Http\Controllers\HomeController::class, 'sensor'])->name('sensor');
 Route::get('/ranges', [App\Http\Controllers\HomeController::class, 'ranges'])->name('ranges');
 
 Route::get('/api/status', [App\Http\Controllers\ApiController::class, 'getConServer'])->name('getconserver');
 
+Route::get('/iptables/accept/{ip}/{time}/{tipe}', [App\Http\Controllers\HomeController::class, 'accept'])->name('accept');
+Route::get('/iptables/reject/{ip}/{time}/{tipe}', [App\Http\Controllers\HomeController::class, 'reject'])->name('reject');
+Route::get('/iptables/drop/{ip}/{time}/{tipe}', [App\Http\Controllers\HomeController::class, 'drop'])->name('drop');
 });
 // End Middleware
 

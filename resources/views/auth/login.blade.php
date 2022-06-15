@@ -18,10 +18,8 @@
 
       <div class="box">
         <div class="title-box">
-            <h3>Suricata Intrusion Prevention</h3>
-            <p></p>
+            <img src="{{ asset('icon.png')}}" width="110%">
         </div>
-
 
         <div class="form-box">
         @csrf
