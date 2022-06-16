@@ -19,7 +19,6 @@ if(len(lines)>1):
         tmp.append(date1[2])
         date1 = "-".join(tmp)
 
-
         w =[]
         w.append(date1)
         w.append(date[1])
