@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Sensor;
 use App\Models\Iptables;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+
 class HomeController extends Controller
 {
 
@@ -25,7 +27,9 @@ class HomeController extends Controller
         $ICMP = Iptables::where('tipe', 'ICMP')->get()->count();
         $TCP = Iptables::where('tipe', 'TCP')->get()->count();
 
-        return view('beranda', compact('title', 'serangan', 'ICMP', 'TCP'));
+        $sensor = Sensor::latest()->take(20)->get();
+
+        return view('beranda', compact('title', 'serangan', 'ICMP', 'TCP' ,'sensor'));
     }
 
     public function log_serangan() {

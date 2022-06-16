@@ -13,7 +13,7 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
-sql = "INSERT INTO sensor (cpu, memory, disk) VALUES (%s, %s, %s)"
+sql = "INSERT INTO sensor (cpu, memory, disk, created_at) VALUES (%s, %s, %s, now())"
 val = (psutil.cpu_percent(1), psutil.virtual_memory()[2], psutil.disk_usage('/').percent)
 mycursor.execute(sql, val)
 

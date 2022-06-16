@@ -138,6 +138,7 @@
 
                     }));
                     // End CPU
+
                     // MEMORY
                     var chartmemory = Highcharts.chart('container-memory', Highcharts.merge(gaugeOptions, {
                         yAxis: {

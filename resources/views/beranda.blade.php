@@ -3,6 +3,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 font-weight-bold text-gray-800"><i class="fa fa-tachometer" aria-hidden="true"></i> Halaman Beranda</h1>
     </div>
+    <link rel="stylesheet" href="css/livechart.css">
     <div class="card">
         <div class="card-body">
             <div class="beranda">
@@ -59,7 +60,7 @@
                             </div>
                         </div>
                     </div> --}}
-                    
+
                     <div class="col-xl-4 col-md-6 mb-4">
                         <div class="card border-left-warning shadow h-100 py-2">
                             <div class="card-body">
@@ -90,6 +91,31 @@
             </div>
         </div>
     </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <figure class="highcharts-figure">
+                        <div id="container-cpu"></div>
+                        <p class="highcharts-description">
+
+                        </p>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="highcharts-figure">
+                        <div id="container-memory"></div>
+                        <p class="highcharts-description">
+
+                        </p>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="row mt-4 mb-4">
         <div class="col-6">
             <div class="card">
@@ -131,7 +157,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="col-6">
             <div class="card">
@@ -166,16 +191,222 @@
                                     document.getElementById('myChart2'),
                                     config2
                                 );
-
                             </script>
-
-
                             {{-- end mychart ICMP --}}
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+{{-- CPU data --}}
+<script>
+    var cpu = Highcharts.chart('container-cpu', {
+    chart: {
+        type: 'spline',
+        animation: Highcharts.svg, // don't animate in old IE
+        marginRight: 10,
+        events: {
+            load: function () {
+
+                // set up the updating of the chart each second
+
+                setInterval(function () {
+                    getsensor();
+                }, 3000);
+            }
+        }
+    },
+
+    time: {
+        useUTC: false
+    },
+
+    title: {
+        text: 'CPU'
+    },
+
+    accessibility: {
+        announceNewData: {
+            enabled: true,
+            minAnnounceInterval: 15000,
+            announcementFormatter: function (allSeries, newSeries, newPoint) {
+                if (newPoint) {
+                    return 'New point added. Value: ' + newPoint.y;
+                }
+                return false;
+            }
+        }
+    },
+
+    xAxis: {
+        type: 'datetime',
+        tickPixelInterval: 150
+    },
+
+    yAxis: {
+        title: {
+            text: 'Penggunaan CPU'
+        },
+        plotLines: [{
+            value: 0,
+            width: 1,
+            color: '#808080'
+        }]
+    },
+
+    tooltip: {
+        headerFormat: '<b>{series.name}</b><br/>',
+        pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+    },
+
+    legend: {
+        enabled: false
+    },
+
+    exporting: {
+        enabled: false
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'Data CPU',
+        data: [
+            @foreach ($sensor as $data)
+                {
+                    x: (new Date()).getTime() + {{ $loop->iteration }} * 1000,
+                    y: {{ $data->cpu }}
+                },
+            @endforeach
+        ]
+    }]
+});
+
+function getsensor() {
+    $.ajax({
+        url: "{{ route('getconserver') }}",
+        type: 'get',
+        success: function(response) {
+
+            console.log(response[0]);
+
+            var cpuseries = cpu.series[0];
+            var x = (new Date()).getTime(), // current time
+                y = parseFloat(response[0]);
+            cpuseries.addPoint([x, y], true, true);
+
+        }
+    })
+}
+</script>
+{{-- End CPU --}}
+
+{{-- Memory --}}
+<script>
+    var memory = Highcharts.chart('container-memory', {
+    chart: {
+        type: 'spline',
+        animation: Highcharts.svg, // don't animate in old IE
+        marginRight: 10,
+        events: {
+            load: function () {
+
+                // set up the updating of the chart each second
+
+                setInterval(function () {
+                    getmemory();
+                }, 3000);
+            }
+        }
+    },
+
+    time: {
+        useUTC: false
+    },
+
+    title: {
+        text: 'Memory'
+    },
+
+    accessibility: {
+        announceNewData: {
+            enabled: true,
+            minAnnounceInterval: 15000,
+            announcementFormatter: function (allSeries, newSeries, newPoint) {
+                if (newPoint) {
+                    return 'New point added. Value: ' + newPoint.y;
+                }
+                return false;
+            }
+        }
+    },
+
+    xAxis: {
+        type: 'datetime',
+        tickPixelInterval: 150
+    },
+
+    yAxis: {
+        title: {
+            text: 'Penggunaan Memory'
+        },
+        plotLines: [{
+            value: 0,
+            width: 1,
+            color: '#808080'
+        }]
+    },
+
+    tooltip: {
+        headerFormat: '<b>{series.name}</b><br/>',
+        pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+    },
+
+    legend: {
+        enabled: false
+    },
+
+    exporting: {
+        enabled: false
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'Data Memory',
+        data: [
+            @foreach ($sensor as $data)
+                {
+                    x: (new Date()).getTime() + {{ $loop->iteration }} * 1000,
+                    y: {{ $data->memory }}
+                },
+            @endforeach
+        ]
+    }]
+});
+
+function getmemory() {
+    $.ajax({
+        url: "{{ route('getconserver') }}",
+        type: 'get',
+        success: function(response) {
+
+            console.log(response[1]);
+
+            var memoryseries = memory.series[0];
+            var x = (new Date()).getTime(), // current time
+                y = parseFloat(response[1]);
+            memoryseries.addPoint([x, y], true, true);
+
+        }
+    })
+}
+
+</script>
+{{-- Memory --}}
 @endsection
