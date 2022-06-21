@@ -91,7 +91,7 @@
             </div>
         </div>
     </div>
-
+{{-- Live Chart CPU Memory --}}
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -114,8 +114,7 @@
             </div>
         </div>
     </div>
-
-
+{{-- END Live Chart CPU Memory --}}
     <div class="row mt-4 mb-4">
         <div class="col-6">
             <div class="card">

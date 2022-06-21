@@ -42,6 +42,15 @@ Route::get('/api/status', [App\Http\Controllers\ApiController::class, 'getConSer
 Route::get('/iptables/accept/{ip}/{time}/{tipe}', [App\Http\Controllers\HomeController::class, 'accept'])->name('accept');
 Route::get('/iptables/reject/{ip}/{time}/{tipe}', [App\Http\Controllers\HomeController::class, 'reject'])->name('reject');
 Route::get('/iptables/drop/{ip}/{time}/{tipe}', [App\Http\Controllers\HomeController::class, 'drop'])->name('drop');
+
 });
 // End Middleware
+
+// flutter
+Route::get('/api/getlog', [App\Http\Controllers\ApiController::class, 'getlog'])->name('getlog');
+Route::get('/api/accept/{ip}/{time}/{tipe}', [App\Http\Controllers\ApiController::class, 'accept'])->name('accept');
+Route::get('/api/reject/{ip}/{time}/{tipe}', [App\Http\Controllers\ApiController::class, 'reject'])->name('reject');
+Route::get('/api/drop/{ip}/{time}/{tipe}', [App\Http\Controllers\ApiController::class, 'drop'])->name('drop');
+
+Route::get('/api/getiptables', [App\Http\Controllers\ApiController::class, 'getiptables'])->name('getiptables');
 
