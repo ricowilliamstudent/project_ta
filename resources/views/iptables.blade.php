@@ -6,8 +6,6 @@
     </div>
     <div class="card">
         <div class="notifikasi">
-
-
             {{-- Content --}}
             <div class="mt-3">
                 <table id="myTable" class="table table-bordered">
@@ -50,7 +48,7 @@
                     "columnDefs":[
                         {"searchable": false,
                         "targets": 5,
-                        
+
                     }
                 ]
                 } );

@@ -137,7 +137,10 @@
                                         label: 'SERANGAN TCP',
                                         backgroundColor: 'rgb(255,165,0)',
                                         borderColor: 'rgb(255,165,0)',
-                                        data: [20, 40, 60, 80, 100],
+                                        // get data icmp
+                                        data: [@foreach ( $bulantcp as $item)
+                                            {{ $item }},
+                                        @endforeach],
                                     }]
                                 };
 
@@ -177,7 +180,10 @@
                                         label: 'SERANGAN ICMP',
                                         backgroundColor: 'rgb(255,165,0)',
                                         borderColor: 'rgb(255,165,0)',
-                                        data: [20, 40, 60, 80, 100],
+                                        // get data icmp
+                                        data: [@foreach ( $bulanicmp as $item)
+                                            {{ $item }},
+                                        @endforeach],
                                     }]
                                 };
 
@@ -198,6 +204,7 @@
             </div>
         </div>
     </div>
+
 {{-- CPU data --}}
 <script>
     var cpu = Highcharts.chart('container-cpu', {

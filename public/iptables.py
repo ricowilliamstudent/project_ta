@@ -5,7 +5,7 @@ client = paramiko.SSHClient()
 # add to known hosts
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 try:
-    client.connect(hostname="10.30.10.37", username="root", password="duniaku1234")
+    client.connect(hostname="10.30.10.32", username="root", password="duniaku1234")
 except:
     print("[!] Cannot connect to the SSH Server")
     exit()

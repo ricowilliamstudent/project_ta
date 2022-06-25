@@ -15,13 +15,13 @@
                         <td><b>Serangan</td>
                         <td><b>Ringan</td>
                         <td><b>Sedang</td>
-                        <td><b>Parah</td>
+                        <td><b>Berat</td>
                         <td><b>Aksi</td>
                     </thead>
                     <tbody style="text-align: center">
                         <tr>
                             <td>1</td>
-                            <td>SSH</td>
+                            <td>TCP</td>
                             <td>100</td>
                             <td>450</td>
                             <td>1000</td>
@@ -33,7 +33,7 @@
 
                         <tr>
                             <td>2</td>
-                            <td>TELNET</td>
+                            <td>ICMP</td>
                             <td>100</td>
                             <td>350</td>
                             <td>500</td>

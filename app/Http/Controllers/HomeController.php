@@ -26,10 +26,20 @@ class HomeController extends Controller
         $serangan = Iptables::all()-> count();
         $ICMP = Iptables::where('tipe', 'ICMP')->get()->count();
         $TCP = Iptables::where('tipe', 'TCP')->get()->count();
+        // Grafik highchart tcp
+        $bulantcp = [];
+        for ($i=0; $i < 12; $i++) {
+            $bulantcp[$i] = Iptables::whereMonth("created_at",$i+1) -> where('tipe', 'TCP') -> count();
+        }
+        // Grafik highchart icmp
+        $bulanyicmp = [];
+        for ($i=0; $i < 12; $i++) {
+            $bulanicmp[$i] = Iptables::whereMonth("created_at",$i+1) -> where('tipe', 'ICMP') -> count();
+        }
 
         $sensor = Sensor::latest()->take(20)->get();
 
-        return view('beranda', compact('title', 'serangan', 'ICMP', 'TCP' ,'sensor'));
+        return view('beranda', compact('title', 'serangan', 'ICMP', 'TCP' ,'sensor', 'bulantcp', 'bulanicmp'));
     }
 
     public function log_serangan() {

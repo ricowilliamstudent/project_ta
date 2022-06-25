@@ -54,3 +54,5 @@ Route::get('/api/drop/{ip}/{time}/{tipe}', [App\Http\Controllers\ApiController::
 
 Route::get('/api/getiptables', [App\Http\Controllers\ApiController::class, 'getiptables'])->name('getiptables');
 
+
+
