@@ -126,6 +126,7 @@ class HomeController extends Controller
     }
 
     public function drop($ip, $time, $tipe){
+
         $time = str_replace('.',' ', $time);
         $time = Carbon::parse($time);
         $iptables = Iptables::where('sumberip', $ip)->where ('tipe', $tipe) -> first() ?? null;

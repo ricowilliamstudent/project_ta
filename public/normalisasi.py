@@ -1,6 +1,7 @@
 from audioop import reverse
 import json
 data = {}
+# Get data from server
 with open('/var/log/suricata/fast.log') as f:
     lines = f.readlines()
 if(len(lines)>101):
@@ -26,11 +27,12 @@ if(len(lines)>1):
         date = ' '.join(w)
 
         type = line.split("[**]")[1].split(" ")[2]
-        ip = line.split("[**]")[2].split("}")[-1].split("->")[1].split(":")[0]
+        # Get IP
+        ip = line.split("[**]")[2].split("}")[-1].split("->")[0].split(":")[0]
         print(line)
         data[ip+"-"+type] = [date,type,ip]
 else:
-
+# Turn data into data.json
     data = []
 with open('data.json', 'w') as f:
 

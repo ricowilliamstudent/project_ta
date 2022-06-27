@@ -17,7 +17,7 @@
                         <td><b>No.</td>
                         <td><b>Sumber IP</td>
                         <td><b>Waktu</td>
-                        <td><b>Pesan</td>
+                        <td><b>Tipe</td>
                         <td><b>Aksi</td>
                     </thead>
                     <tbody style="text-align: center">
