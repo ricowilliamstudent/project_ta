@@ -48,7 +48,6 @@
                     "columnDefs":[
                         {"searchable": false,
                         "targets": 5,
-
                     }
                 ]
                 } );

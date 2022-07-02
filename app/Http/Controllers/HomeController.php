@@ -16,7 +16,6 @@ class HomeController extends Controller
     public function index() {
         $title = "Beranda";
 
-
         return view('beranda', compact('title'));
     }
 
@@ -98,7 +97,6 @@ class HomeController extends Controller
 
         $iptables = iptables::latest() -> get();
 
-
         return view('iptables', compact('title','iptables'));
     }
 
@@ -148,7 +146,5 @@ class HomeController extends Controller
 
         return view('iptables', compact('title','iptables'));
     }
-
-
 
 }
