@@ -9,6 +9,7 @@ use App\Models\Iptables;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use DateTime;
 
 class HomeController extends Controller
 {
@@ -49,7 +50,15 @@ class HomeController extends Controller
         // dd($output);
         $log = json_decode(file_get_contents(public_path() . "/data.json"), true);
         $log = array_reverse($log);
-        return view('log_serangan', compact('title','log'));
+        // dd($log);
+        $log_status = iptables::all();
+        $nilai_sumberip = [];
+        $nilai_waktu = [];
+        foreach($log_status as $item){
+            $nilai_sumberip[] = $item->sumberip;
+            $nilai_waktu[] = Carbon::parse($item->waktu)->format("d-m-Y H:i:s");
+        }
+        return view('log_serangan', compact('title','log', 'nilai_sumberip','nilai_waktu'));
     }
 
     public function iptables() {
@@ -91,9 +100,22 @@ class HomeController extends Controller
         $iptables -> tipe = $tipe;
         $iptables -> save();
 
+        // waktu aksi awal
+        $t = microtime(true);
+        $micro = sprintf("%06d", ($t - floor($t)) *1000000);
+        $d = new DateTime(date ('H:i:s.'.$micro, $t) );
+        $aksi_awal = iptables::where('sumberip', $ip)->update(['aksi_awal' => $d->format('H:i:s.u')]);
+
+        // Call Python
         $command = escapeshellcmd('python3 iptables.py '.$ip.' ACCEPT');
         $output = explode(",",shell_exec($command));
         $title = "iptables";
+
+        // waktu aksi akhir
+        $t = microtime(true);
+        $micro = sprintf("%06d", ($t - floor($t)) *1000000);
+        $d2 = new DateTime(date ('H:i:s.'.$micro, $t) );
+        $aksi_akhir = iptables::where('sumberip', $ip)->update(['aksi_akhir' => $d2->format('H:i:s.u')]);
 
         $iptables = iptables::latest() -> get();
 
@@ -113,10 +135,22 @@ class HomeController extends Controller
         $iptables -> tipe = $tipe;
         $iptables -> save();
 
+        // waktu awal
+        $t = microtime(true);
+        $micro = sprintf("%06d", ($t - floor($t)) *1000000);
+        $d = new DateTime(date ('H:i:s.'.$micro, $t) );
+        $aksi_awal = iptables::where('sumberip', $ip)->update(['aksi_awal' => $d->format('H:i:s.u')]);
+
+        // call python
         $command = escapeshellcmd('python3 iptables.py '.$ip.' REJECT');
         $output = explode(",",shell_exec($command));
-
         $title = "iptables";
+
+        // waktu aksi akhir
+        $t = microtime(true);
+        $micro = sprintf("%06d", ($t - floor($t)) *1000000);
+        $d2 = new DateTime(date ('H:i:s.'.$micro, $t) );
+        $aksi_akhir = iptables::where('sumberip', $ip)->update(['aksi_akhir' => $d2->format('H:i:s.u')]);
 
         $iptables = iptables::latest() -> get();
 
@@ -137,10 +171,22 @@ class HomeController extends Controller
         $iptables -> tipe = $tipe;
         $iptables -> save();
 
+        // waktu awal
+        $t = microtime(true);
+        $micro = sprintf("%06d", ($t - floor($t)) *1000000);
+        $d = new DateTime(date ('H:i:s.'.$micro, $t) );
+        $aksi_awal = iptables::where('sumberip', $ip)->update(['aksi_awal' => $d->format('H:i:s.u')]);
+
+        // call python
         $command = escapeshellcmd('python3 iptables.py '.$ip.' DROP');
         $output = explode(",",shell_exec($command));
-
         $title = "iptables";
+
+        // waktu aksi akhir
+        $t = microtime(true);
+        $micro = sprintf("%06d", ($t - floor($t)) *1000000);
+        $d2 = new DateTime(date ('H:i:s.'.$micro, $t) );
+        $aksi_akhir = iptables::where('sumberip', $ip)->update(['aksi_akhir' => $d2->format('H:i:s.u')]);
 
         $iptables = iptables::latest() -> get();
 

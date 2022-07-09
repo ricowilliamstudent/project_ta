@@ -12,4 +12,6 @@ except:
 print("jalan")
 
 ssh_stdin, ssh_stdout, ssh_stderr = client.exec_command('iptables -I INPUT -s '+sys.argv[1]+' -j '+sys.argv[2])
+# ssh_stdin, ssh_stdout, ssh_stderr = client.exec_command('sudo iptables -I INPUT -s '+sys.argv[1]+' -j '+sys.argv[2])
+
 

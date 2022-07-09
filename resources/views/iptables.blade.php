@@ -7,6 +7,7 @@
     <div class="card">
         <div class="notifikasi">
             {{-- Content --}}
+
             <div class="mt-3">
                 <table id="myTable" class="table table-bordered">
                     <thead style="text-align: center">
@@ -22,7 +23,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->sumberip }}</td>
-                                <td>{{\Carbon\Carbon::parse($item->waktu)->format('d-m-Y H:m:s') }}</td>
+                                <td>{{\Carbon\Carbon::parse($item->waktu)->format('d-m-Y H:i:s') }}</td>
                                 <td>{{ $item->status }}</td>
                                 <td>{{ $item->tipe }}</td>
                                 <td>

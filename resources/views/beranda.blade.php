@@ -107,7 +107,6 @@
                     <figure class="highcharts-figure">
                         <div id="container-memory"></div>
                         <p class="highcharts-description">
-
                         </p>
                     </figure>
                 </div>
@@ -219,7 +218,7 @@
 
                 setInterval(function () {
                     getsensor();
-                }, 3000);
+                }, 2000);
             }
         }
     },
@@ -324,7 +323,7 @@ function getsensor() {
 
                 setInterval(function () {
                     getmemory();
-                }, 3000);
+                }, 2000);
             }
         }
     },
