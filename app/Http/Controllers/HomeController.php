@@ -11,6 +11,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
 
+
 class HomeController extends Controller
 {
 
@@ -118,8 +119,9 @@ class HomeController extends Controller
         $aksi_akhir = iptables::where('sumberip', $ip)->update(['aksi_akhir' => $d2->format('H:i:s.u')]);
 
         $iptables = iptables::latest() -> get();
+                                                                  // Message
+        return view('iptables', compact('title','iptables'))->with("message","Berhasil di Accept");
 
-        return view('iptables', compact('title','iptables'));
     }
 
     public function reject($ip, $time, $tipe){
@@ -153,8 +155,8 @@ class HomeController extends Controller
         $aksi_akhir = iptables::where('sumberip', $ip)->update(['aksi_akhir' => $d2->format('H:i:s.u')]);
 
         $iptables = iptables::latest() -> get();
-
-        return view('iptables', compact('title','iptables'));
+                                                                  // Message
+        return view('iptables', compact('title','iptables'))->with("message","Berhasil di Reject");
     }
 
     public function drop($ip, $time, $tipe){
@@ -189,8 +191,8 @@ class HomeController extends Controller
         $aksi_akhir = iptables::where('sumberip', $ip)->update(['aksi_akhir' => $d2->format('H:i:s.u')]);
 
         $iptables = iptables::latest() -> get();
-
-        return view('iptables', compact('title','iptables'));
+                                                                  // Message
+        return view('iptables', compact('title','iptables'))->with("message","Berhasil di Drop");
     }
 
 }

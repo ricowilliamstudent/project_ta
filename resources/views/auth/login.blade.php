@@ -18,7 +18,7 @@
 <body>
         <div class="box">
         <div class="title-box">
-            <img src="{{ asset('suricataicon.png')}}" width="110%">
+            <img src="{{ asset('iconaplikasii.png')}}" width="110%">
         </div>
 
         <div class="form-box">

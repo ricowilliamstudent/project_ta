@@ -229,7 +229,7 @@
                     }
                     setInterval(function() {
                         getsensor();
-                    }, 3000);
+                    }, 2000);
                 </script>
             </div>
         </div>

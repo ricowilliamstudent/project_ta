@@ -43,6 +43,7 @@
     @endsection
 
     @push('js')
+    {{-- Create Message --}}
         <script>
             $(document).ready(function() {
                 $('#myTable').DataTable( {
@@ -53,5 +54,13 @@
                 ]
                 } );
             });
+
+            @if(isset($message))
+            Toast.fire({
+            icon: 'success',
+            title: '{{$message}}'
+            })
+            @endif
         </script>
+    {{-- End Create Message --}}
     @endpush

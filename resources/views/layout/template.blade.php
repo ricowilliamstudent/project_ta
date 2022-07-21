@@ -32,8 +32,6 @@
 
   {{-- End HighCharts --}}
 
-
-
 </head>
 
 <body id="page-top">
@@ -56,37 +54,37 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item {{ (request()->is('beranda')) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('beranda') }}">
                     <i class="fa fa-home"></i>
                     <span>Beranda</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item {{ (request()->is('log_serangan')) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('log_serangan') }}">
                     <i class="fa fa-bug"></i>
                     <span>Log Serangan</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item {{ (request()->is('iptables')) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('iptables') }}">
                     <i class="fa fa-bell"></i>
-                    <span>Iptables</span></a>
+                    <span>IPtables</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item {{ (request()->is('ranges')) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('ranges') }}">
                     <i class="fa fa-pencil"></i>
                     <span>Ranges</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item {{ (request()->is('sensor')) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('sensor') }}">
                     <i class="fa fa-heartbeat"></i>
                     <span>Sensor</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item {{ (request()->is('logout')) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('logout') }}">
                     <i class="fa fa-sign-out"></i>
                     <span>Logout</span></a>
@@ -180,10 +178,22 @@
 
     <script src="{{ asset('assets') }}/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="{{ asset('assets') }}/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-
-
-
+    {{-- message --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                    })
+        </script>
+    {{-- end message --}}
 @stack('js')
 </body>
 </html>
